@@ -28,11 +28,12 @@ function App() {
         {quizQuestions.map(
           (question, index) =>
             questionNumber === index && (
-              <section key={index} className="question-container">
+              <section key={index} className="question_container">
                 <Question
                   {...question}
                   nextQNo={nextQuestion}
                   selectOption={addChosenOption}
+                  qNo={index}
                 />
               </section>
             )

@@ -1,0 +1,73 @@
+.timer_bar {
+  height: 10px;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  animation: timer 10s linear;
+  transition: width 1s linear, background-color 1s linear;
+}
+
+.question_box {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.question {
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.option {
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.option:hover {
+  background: #313131;
+  color: whitesmoke;
+}
+
+.next_button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.05rem;
+  border-radius: 5px;
+  border: none;
+  background: #4caf50;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.next_button:hover {
+  background: #45a049;
+}
+
+@keyframes timer {
+  0% {
+    width: 0;
+    background-color: lightgreen;
+  }
+  25% {
+    width: 25%;
+    background-color: green;
+  }
+  50% {
+    width: 50%;
+    background-color: yellow;
+  }
+  75% {
+    width: 75%;
+    background-color: orange;
+  }
+  100% {
+    width: 100%;
+    background-color: red;
+  }
+}

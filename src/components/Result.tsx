@@ -4,7 +4,6 @@ interface IQNA {
   QNA: IResult[];
 }
 const Result = ({ QNA }: IQNA) => {
-  console.log(QNA);
   let total = 0;
 
   for (let i = 0; i < QNA.length; i++) {
@@ -12,17 +11,27 @@ const Result = ({ QNA }: IQNA) => {
   }
 
   return (
-    <div>
+    <div className="result-container">
       <h2>Result</h2>
       {QNA.map((qna, index) => (
         <section key={index}>
-          <div>
-            <p>Right Answer : {qna.answer}</p>
-            <p>You've chosen : {qna.chosen}</p>
+          <div className="ans">
+            <p className="ques">Question: {qna.question}</p>
+            <p>Right answer: {qna.answer}</p>
+            <p className={qna.answer === qna.chosen ? "green" : "red"}>
+              You've chosen: {qna.chosen}
+            </p>
           </div>
         </section>
       ))}
-      <div>Total : {total + "/" + QNA.length}</div>
+      <div className="total-score">
+        <h2>
+          Total:{" "}
+          <span>
+            {total}/{QNA.length}
+          </span>
+        </h2>
+      </div>
     </div>
   );
 };
