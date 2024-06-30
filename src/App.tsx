@@ -10,8 +10,6 @@ export interface IResult {
   chosen: string;
 }
 
-
-
 function App() {
   const [questionNumber, setQuestionNumber] = useState(0);
   const [QnA, setQnA] = useState<IResult[]>([]);
