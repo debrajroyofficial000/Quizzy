@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "../styles/Question.css";
+
 interface IQuestion {
   question: string;
   options: string[];
@@ -8,6 +9,7 @@ interface IQuestion {
   nextQNo: () => void;
   selectOption: (question: string, answer: string, option: string) => void;
 }
+
 const Question = ({
   question,
   options,
@@ -16,31 +18,29 @@ const Question = ({
   nextQNo,
   selectOption,
 }: IQuestion) => {
-  const chosenOption = useRef<number>();
-  const optionRef = useRef<HTMLHeadingElement | null>(null);
-  const [buttonToggle, setButtonToggle] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const timerRef = useRef(0);
-  const handleSubmitOption = (option: string, index: number) => {
-    chosenOption.current = index;
-    selectOption(question, answer, option);
-    setButtonToggle(true);
+
+  const handleSubmitOption = (option: string) => {
+    if (selectedOption === null) {
+      setSelectedOption(option);
+      selectOption(question, answer, option);
+    }
   };
 
   useEffect(() => {
-    if (optionRef.current) {
-      optionRef.current.style.backgroundColor = "#313131";
-      optionRef.current.style.color = "whitesmoke";
-    }
     let timer = setInterval(() => {
       if (timerRef.current <= 10) timerRef.current++;
       else {
-        selectOption(question, answer, "");
+        if (selectedOption === null) {
+          selectOption(question, answer, "");
+        }
         nextQNo();
       }
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timerRef.current, optionRef.current]);
+  }, [selectedOption, nextQNo, selectOption, question, answer]);
 
   return (
     <>
@@ -52,18 +52,13 @@ const Question = ({
         {options.map((option, index) => (
           <h3
             key={index}
-            className="option"
-            ref={
-              chosenOption.current && chosenOption.current === index
-                ? optionRef
-                : null
-            }
-            onClick={() => handleSubmitOption(option, index)}
+            className={`option ${selectedOption === option ? "selected" : ""}`}
+            onClick={() => handleSubmitOption(option)}
           >
             {index + 1}. {option}
           </h3>
         ))}
-        {buttonToggle && (
+        {selectedOption !== null && (
           <button onClick={nextQNo} className="next_button">
             Next
           </button>
