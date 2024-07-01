@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/Question.css";
 
 interface IQuestion {
@@ -18,29 +18,23 @@ const Question = ({
   nextQNo,
   selectOption,
 }: IQuestion) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const timerRef = useRef(0);
+  const [selectedOption, setSelectedOption] = useState("");
 
   const handleSubmitOption = (option: string) => {
-    if (selectedOption === null) {
+    if (!selectedOption.length) {
       setSelectedOption(option);
       selectOption(question, answer, option);
     }
   };
 
   useEffect(() => {
-    let timer = setInterval(() => {
-      if (timerRef.current <= 10) timerRef.current++;
-      else {
-        if (selectedOption === null) {
-          selectOption(question, answer, "");
-        }
-        nextQNo();
-      }
-    }, 1000);
+    let timer = setTimeout(() => {
+      selectOption(question, answer, selectedOption);
+      nextQNo();
+    }, 10000);
 
     return () => clearInterval(timer);
-  }, [selectedOption, nextQNo, selectOption, question, answer]);
+  }, []);
 
   return (
     <>
@@ -58,7 +52,7 @@ const Question = ({
             {index + 1}. {option}
           </h3>
         ))}
-        {selectedOption !== null && (
+        {selectedOption.length > 0 && (
           <button onClick={nextQNo} className="next_button">
             Next
           </button>
